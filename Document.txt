@@ -1,0 +1,153 @@
+1)Registration:
+
+Request:curl --location 'localhost:3000/register' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "amantandon3@gmail.com",
+    "password":"ramjane",
+    "username": "amant",
+    "isAdmin": false}'
+
+Response:User registered.
+
+request in case of admin
+Request:curl --location 'localhost:3000/register' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "amantandon4@gmail.com",
+    "password":"ramjane",
+    "username": "amant",
+    "isAdmin": false}'
+    
+Response:User registered.
+
+2) Login
+
+curl --location 'localhost:3000/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "amantandon@gmail.com",
+    "password":"ramjane"
+
+}'
+Response:
+{
+"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQxZmY0YmVmZjBmOTRmOGU4MWZiMWYiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5ODgzMTcyNiwiZXhwIjoxNjk4ODM1MzI2fQ.vDRqUqfobvk4nXB9Pf9Qk4Zr-jPLXZVX3wDyXQD8LeE"
+}
+
+
+3) Crud Operation:
+
+Read: 
+curl --location 'localhost:3000/items/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQxZmY0YmVmZjBmOTRmOGU4MWZiMWYiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5ODgzMTg0NywiZXhwIjoxNjk4ODM1NDQ3fQ.jh_ZvyprmiM59idVoGO0WygDpziaW6HPxZaKO1bQT7k'
+
+
+Response for both admin users and users users:
+[
+    {
+        "_id": "6541ef737908cf138c332f92",
+        "name": "pencil",
+        "description": "to write",
+        "__v": 0
+    },
+    {
+        "_id": "6541ef8e7908cf138c332f94",
+        "name": "pen",
+        "description": "to write",
+        "__v": 0
+    },
+    {
+        "_id": "6541efac7908cf138c332f97",
+        "name": "pen",
+        "description": "to write",
+        "__v": 0
+    },
+    {
+        "_id": "6541efb97908cf138c332f99",
+        "name": "pen",
+        "description": "to write",
+        "__v": 0
+    },
+    {
+        "_id": "654215cd9afb3bb987172546",
+        "name": "pencil",
+        "description": "to write",
+        "__v": 0
+    },
+    {
+        "_id": "654216c39afb3bb987172549",
+        "name": "pencil",
+        "description": "to write",
+        "__v": 0
+    },
+    {
+        "_id": "654217019afb3bb98717254c",
+        "name": "pencil",
+        "description": "to write",
+        "__v": 0
+    }
+]
+
+Update
+curl --location --request PUT 'localhost:3000/items/6541ef737908cf138c332f92' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQxZmY0YmVmZjBmOTRmOGU4MWZiMWYiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5ODgzMTg0NywiZXhwIjoxNjk4ODM1NDQ3fQ.jh_ZvyprmiM59idVoGO0WygDpziaW6HPxZaKO1bQT7k' \
+--data '{
+    "name":"ball pen",
+    "description": "to write"
+}
+
+Response for both users and admin users:
+{
+    "_id": "6541ef737908cf138c332f92",
+    "name": "ball pen",
+    "description": "to write",
+    "__v": 0
+}
+
+Create:
+curl --location 'localhost:3000/items/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQxZmY0YmVmZjBmOTRmOGU4MWZiMWYiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5ODgzMTg0NywiZXhwIjoxNjk4ODM1NDQ3fQ.jh_ZvyprmiM59idVoGO0WygDpziaW6HPxZaKO1bQT7k' \
+--data '{
+    "name":"ball pen",
+    "description": "to write
+}
+
+Response in case of users:
+Access denied. Admin rights required.
+
+curl --location 'localhost:3000/items' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQxMmMxZTJmZjNiMjNhMDllNmI5NmUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTg4MzM3ODMsImV4cCI6MTY5ODgzNzM4M30.i4Jjl9m8VNgkM1CKB7sG2JOlfMpiFzV1nZqkpepmxAU' \
+--data '{
+    "name": "yellow pen",
+    "description": "to write"
+}'
+
+Response in case of admin:
+{
+    "name": "yellow pen",
+    "description": "to write",
+    "_id": "654226522d708bdd023c803c",
+    "__v": 0
+}
+Delete:
+
+curl --location --request DELETE 'localhost:3000/items/6541ef737908cf138c332f92' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQxZmY0YmVmZjBmOTRmOGU4MWZiMWYiLCJyb2xlIjoidXNlciIsImlhdCI6MTY5ODgzMTg0NywiZXhwIjoxNjk4ODM1NDQ3fQ.jh_ZvyprmiM59idVoGO0WygDpziaW6HPxZaKO1bQT7k' \
+--data ''
+
+Response:
+In case of users
+Access denied. Admin rights required.
+
+In case of admin:
+curl --location --request DELETE 'localhost:3000/items/6541ef737908cf138c332f92' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQxMmMxZTJmZjNiMjNhMDllNmI5NmUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTg4MzM3ODMsImV4cCI6MTY5ODgzNzM4M30.i4Jjl9m8VNgkM1CKB7sG2JOlfMpiFzV1nZqkpepmxAU' \
+--data ''
+response:Item deleted.
